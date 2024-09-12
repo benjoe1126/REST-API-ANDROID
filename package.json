@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.7.1",
+    "cookie-parser": "^1.4.6"
+  },
+  "name": "serversidejs",
+  "description": "Hf projekt szerver oldali javascriptre",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test":  "find ./test -name '*Test.js' | xargs nyc mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
