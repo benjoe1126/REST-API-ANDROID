@@ -1,14 +1,12 @@
-# Mobweb házi, kollégiumi nyilvántartó
+# Mobweb homework, dormitory registry
 
-# API
-- Előkészületek:
-  - Az alábbi linkről letölthető a docker desktop (avagy linuxra csak maga a daemon) https://www.docker.com/get-started/
-- Indítás:
-   - Ha telepítve van és fut a docker daemon, akkor nyissunk a jelenlegi (/projekt_name/rest) könyvtárban egy parancssort (windowson a fájlkezelő search bar részéből töröljünk ki mindent és írjuk be, hogy "cmd")
-   - Ha megnyílt a paranccsor, akkor adjuk ki a következő parancsot:<br> ```docker-compose up```
-   - Várjunk egy keveset, amíg a docker daemon felépíti is elindítja a megfelelő containereket, ez után már fut is az API, indítsuk el az android alkalmazásunkat és használjuk :D
-- Felmerülő hibák és megoldásaik:
-  - Előfordulhat, hogy port conflict miatt az API nem tud elindulni, ebben az esetben vagy állítsuk le azt az alkalmazást, ami már figyel azon a porton 
-  ```netstat -nao | findstr 3000``` windowson segít megtalálni, ki használja azt a portot, majd administrator parancssorból ```TASKKILL /F /PID <process id>``` paranccsal kézzel leállítható
-  - Előfordulhat, hogy a db nevű container elindult, de az api nevű nem. Mivel alapvetően úgy működik, hogy az api csak akkor indul el, ha a db valami fix megadott időn belül elindul, így előfordulhat lasabb gépeken, hogy a db később indul, mint amennyit az api várni tud. Ekkor a ```docker start api``` paranccsal kézzel elindítható az api container. Hogy megbizonyosodjunk róla, hogy a db container fut, a ```docker ps``` parancsot adjuk ki, ha látjuk a db nevű containert, akkor jók vagyunk
-  - Felmerülhet, hogy bár az API rendesen működik és az android programunk a megfelelő url-en próbálja elérni, valamiért mégsem működik. Főleg windowson előfordulhat, hogy a windows defender firewall megfogja a kéréseinket, mivel azok nem established vagy related tcp kérések. Erre megoldás lehet a windows defender firewall ideiglenes kikapcsolása, vagy új tűzfal szabály felvétele, hogy átengedjen minket. [https://www.milesweb.in/hosting-faqs/add-ip-address-windows-firewall/]
+# API - Preparations:
+ - Download Docker Desktop (or just the daemon for Linux) from the following link: https://www.docker.com/get-started/ 
+- Starting: - Once the Docker daemon is installed and running, open a command prompt in the current (/project_name/rest) directory (on Windows, clear everything from the file manager search bar and type "cmd") 
+- Once the command prompt opens, enter the following command:  
+    ```docker-compose up``` - Wait a bit while the Docker daemon builds and starts the appropriate containers, after which the API should be running. Now, launch your Android application and start using it!
+
+# Troubleshooting and solutions: 
+- It may happen that the API cannot start due to a port conflict. In this case, stop the application already using the port.<br> ```netstat -nao | findstr 3000``` on Windows helps identify what's using the port. You can stop it manually by opening an administrator command prompt and running ```TASKKILL /F /PID <process id>``` 
+- Sometimes the "db" container starts, but the "api" container does not. The API will only start if the database (db) container starts within a fixed time frame, so on slower machines, the database may take longer to start than the API can wait. In this case, manually start the API container using the command ```docker start api```. To verify that the database container is running, enter ```docker ps```, and if you see the "db" container, you're good to go. 
+- Another issue may arise where the API works fine, and the Android app is trying to access it at the correct URL, but it still doesn't work. On Windows, this is often due to the Windows Defender Firewall blocking the requests, as they are not established or related TCP requests. The solution could be temporarily disabling the Windows Defender Firewall or creating a new firewall rule to allow the requests through. https://www.milesweb.in/hosting-faqs/add-ip-address-windows-firewall/
